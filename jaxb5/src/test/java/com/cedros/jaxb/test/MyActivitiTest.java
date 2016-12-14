@@ -16,31 +16,31 @@ import org.junit.Test;
 public class MyActivitiTest {
 
 	@Rule
-	public ActivitiRule activitiRules = new ActivitiRule();
+	public ActivitiRule activitiRule = new ActivitiRule();
 
 	@Test
 	@Deployment(resources = { "MyProcess.bpmn20.xml" })
 	public void myProcessTest() {
-		ProcessInstance processInstance = this.activitiRules.getRuntimeService()
+		ProcessInstance processInstance = this.activitiRule.getRuntimeService()
 				.startProcessInstanceByKey("financialReport");
 		assertNotNull(processInstance);
-		Task task = this.activitiRules.getTaskService().createTaskQuery().singleResult();
+		Task task = this.activitiRule.getTaskService().createTaskQuery().singleResult();
 		assertEquals("Write monthly financial report", task.getName());
-		this.activitiRules.getTaskService().complete(task.getId());
-		assertEquals(this.activitiRules.getTaskService().createTaskQuery().singleResult().getName(),
+		this.activitiRule.getTaskService().complete(task.getId());
+		assertEquals(this.activitiRule.getTaskService().createTaskQuery().singleResult().getName(),
 				"Verify monthly financial report");
 	}
 
 	@Test
 	@Deployment(resources = { "MyProcess2.bpmn20.xml" })
 	public void myProcess2Test() {
-		ProcessInstance processInstance = this.activitiRules.getRuntimeService()
+		ProcessInstance processInstance = this.activitiRule.getRuntimeService()
 				.startProcessInstanceByKey("financialReport");
 		assertNotNull(processInstance);
-		Task task = this.activitiRules.getTaskService().createTaskQuery().singleResult();
+		Task task = this.activitiRule.getTaskService().createTaskQuery().singleResult();
 		assertEquals("Write monthly financial report", task.getName());
-		this.activitiRules.getTaskService().complete(task.getId());
-		TaskQuery taskQuery = this.activitiRules.getTaskService().createTaskQuery().active();
+		this.activitiRule.getTaskService().complete(task.getId());
+		TaskQuery taskQuery = this.activitiRule.getTaskService().createTaskQuery().active();
 		List<Task> list = taskQuery.list();
 		assertEquals(list.get(0).getName(), "Verify monthly financial report");
 		assertEquals(list.get(1).getName(), "DoStuff");
