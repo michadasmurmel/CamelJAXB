@@ -1,4 +1,4 @@
-package com.cedros.jaxb.test;
+package com.michael.jaxb.test;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
@@ -18,11 +18,11 @@ import org.apache.camel.component.properties.PropertiesComponent;
 import org.apache.camel.impl.DefaultCamelContext;
 import org.junit.Test;
 
-import com.cedros.jaxb.Currency;
-import com.cedros.jaxb.Manufacturer;
-import com.cedros.jaxb.Price;
-import com.cedros.jaxb.Product;
-import com.cedros.jaxb.ProductList;
+import com.michael.jaxb.Currency;
+import com.michael.jaxb.Manufacturer;
+import com.michael.jaxb.Price;
+import com.michael.jaxb.Product;
+import com.michael.jaxb.ProductList;
 
 public class MyJAXBMarshallingTest {
 

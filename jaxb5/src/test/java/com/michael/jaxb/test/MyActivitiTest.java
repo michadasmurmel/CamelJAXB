@@ -1,4 +1,4 @@
-package com.cedros.jaxb.test;
+package com.michael.jaxb.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

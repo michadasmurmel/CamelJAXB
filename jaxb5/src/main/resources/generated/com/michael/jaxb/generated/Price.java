@@ -6,7 +6,7 @@
 //
 
 
-package com.cedros.jaxb.generated;
+package com.michael.jaxb.generated;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -15,15 +15,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for Manufacturer complex type.
+ * <p>Java class for Price complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Manufacturer">
+ * &lt;complexType name="Price">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="amount" use="required" type="{http://www.w3.org/2001/XMLSchema}float" />
+ *       &lt;attribute name="currency" use="required" type="{}currency" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -32,34 +33,52 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Manufacturer")
-public class Manufacturer {
+@XmlType(name = "Price")
+public class Price {
 
-    @XmlAttribute(name = "name", required = true)
-    protected String name;
+    @XmlAttribute(name = "amount", required = true)
+    protected float amount;
+    @XmlAttribute(name = "currency", required = true)
+    protected Currency currency;
 
     /**
-     * Gets the value of the name property.
+     * Gets the value of the amount property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
      */
-    public String getName() {
-        return name;
+    public float getAmount() {
+        return amount;
     }
 
     /**
-     * Sets the value of the name property.
+     * Sets the value of the amount property.
+     * 
+     */
+    public void setAmount(float value) {
+        this.amount = value;
+    }
+
+    /**
+     * Gets the value of the currency property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Currency }
+     *     
+     */
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    /**
+     * Sets the value of the currency property.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link Currency }
      *     
      */
-    public void setName(String value) {
-        this.name = value;
+    public void setCurrency(Currency value) {
+        this.currency = value;
     }
 
 }

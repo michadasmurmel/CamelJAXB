@@ -1,4 +1,4 @@
-package com.cedros.business;
+package com.michael.business;
 
 import org.apache.camel.Produce;
 

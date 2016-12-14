@@ -6,7 +6,7 @@
 //
 
 
-package com.cedros.jaxb.generated;
+package com.michael.jaxb.generated;
 
 import java.util.ArrayList;
 import java.util.List;

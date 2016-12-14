@@ -6,7 +6,7 @@
 //
 
 
-package com.cedros.jaxb.generated;
+package com.michael.jaxb.generated;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
