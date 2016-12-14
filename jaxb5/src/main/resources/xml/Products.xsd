@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" jaxb:version="2.1">
+	<xs:element name="ProductList">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="0" maxOccurs="unbounded" ref="Product">
+					<xs:annotation>
+						<xs:appinfo>
+							<jaxb:property name="products" />
+						</xs:appinfo>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Product">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="manufacturer" type="Manufacturer"></xs:element>
+				<xs:element name="price" type="Price"></xs:element>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="Manufacturer">
+		<xs:attribute name="name" type="xs:string" use="required" />
+	</xs:complexType>
+	<xs:complexType name="Price">
+		<xs:attribute name="amount" type="xs:float" use="required" />
+		<xs:attribute name="currency" type="currency" use="required" />
+	</xs:complexType>
+
+	<xs:simpleType name="currency" final="restriction">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="EUR" />
+			<xs:enumeration value="CHF" />
+			<xs:enumeration value="USD" />
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
