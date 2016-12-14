@@ -107,8 +107,11 @@ public class MyJAXBMarshallingTest {
 					// // + filterManufacturer + "]")
 					// .xpath("/ProductList/Product[@name='MySecondProduct']").to(to);
 
-					// this.from(from).choice().when().xpath("/ProductList/Product[@name='MySecondProduct']").to(to)
-					// .otherwise().to(other).end();
+					this.from(from)
+							.choice()
+							.when()
+							.xpath("/ProductList/Product[@name='MySecondProducts']")
+							.to(to).otherwise().to(other).end();
 
 					// final Namespaces ns = new Namespaces("c",
 					// "http://www.mycompany.com/AEContext/xmldata");
@@ -119,7 +122,7 @@ public class MyJAXBMarshallingTest {
 					// "/c:userProfiles/userProfile/userProfileAttributes/userProfileAttribute[2]/@value",
 					// String.class))
 					// .to(to);
-					this.from(from).setBody(this.xpath("Product[@name!='MySecondProductsS']")).to(to);
+//					this.from(from).setBody(this.xpath("Product[@name!='MySecondProductsS']")).to(to);
 				}
 			});
 			camelContext.start();

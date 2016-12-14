@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<priceList>
+	<vendor name="MyManufacturer" />
+	<articleList>
+		<article>
+		<articleName>Lisas123</articleName>
+		<articleDescription>Lisas tolles Produkt</articleDescription>
+		<articlePrice>
+			<validFrom>01.01.2017</validFrom>
+			<validTo>31.03.2017</validTo>
+			<price>30,99</price>
+		</articlePrice>
+		</article>
+	</articleList>
+</priceList>
