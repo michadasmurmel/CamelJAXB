@@ -9,14 +9,18 @@ import java.io.IOException;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import javax.xml.bind.PropertyException;
 import javax.xml.bind.Unmarshaller;
 
+import org.apache.activemq.camel.component.ActiveMQComponent;
 import org.apache.camel.CamelContext;
+import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.properties.PropertiesComponent;
 import org.apache.camel.impl.DefaultCamelContext;
+import org.apache.camel.spring.SpringCamelContext;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.michael.jaxb.Currency;
 import com.michael.jaxb.Manufacturer;
@@ -81,8 +85,6 @@ public class MyJAXBMarshallingTest {
 		PropertiesComponent pc = camelContext.getComponent("properties", PropertiesComponent.class);
 		pc.setLocation("classpath:ftp.properties");
 
-		final String filterManufacturer = "OtherManufacurer";
-
 		String uri = "{{bplaced.ftp.client}}";
 		String incoming = "{{bplaced.ftp.path.incoming}}";
 		String outgoing = "{{bplaced.ftp.path.outgoing}}";
@@ -102,27 +104,12 @@ public class MyJAXBMarshallingTest {
 				@Override
 				public void configure() throws Exception {
 					// this.from(from).filter()
-					// //
 					// .xpath("/ProductList/Product/manufacturer[data/@attrib='name'="
-					// // + filterManufacturer + "]")
+					// + filterManufacturer + "]")
 					// .xpath("/ProductList/Product[@name='MySecondProduct']").to(to);
 
-					this.from(from)
-							.choice()
-							.when()
-							.xpath("/ProductList/Product[@name='MySecondProducts']")
-							.to(to).otherwise().to(other).end();
-
-					// final Namespaces ns = new Namespaces("c",
-					// "http://www.mycompany.com/AEContext/xmldata");
-					//
-					// // existing code
-					// this.from(from)
-					// .setBody(ns.xpath(
-					// "/c:userProfiles/userProfile/userProfileAttributes/userProfileAttribute[2]/@value",
-					// String.class))
-					// .to(to);
-//					this.from(from).setBody(this.xpath("Product[@name!='MySecondProductsS']")).to(to);
+					this.from(from).choice().when().xpath("/ProductList/Product[@name='MySecondProducts']").to(to)
+							.otherwise().to(other).end();
 				}
 			});
 			camelContext.start();
@@ -135,36 +122,27 @@ public class MyJAXBMarshallingTest {
 	}
 
 	@Test
-	public void marshalFtpUpload() {
+	public void convert() {
 		final CamelContext camelContext = new DefaultCamelContext();
 		PropertiesComponent pc = camelContext.getComponent("properties", PropertiesComponent.class);
 		pc.setLocation("classpath:ftp.properties");
 
 		String uri = "{{bplaced.ftp.client}}";
-		String path = "{{bplaced.ftp.path.incoming}}";
+		String incoming = "{{bplaced.ftp.path.incoming}}";
+		String outgoing = "{{bplaced.ftp.path.outgoing}}";
 		String username = "{{bplaced.ftp.username}}";
 		String password = "{{bplaced.ftp.password}}";
-		final String to = new StringBuilder(uri).append("/").append(path).append("?").append(username).append("&")
+
+		final String from = new StringBuilder(uri).append("/").append(outgoing).append("?").append(username).append("&")
 				.append(password).toString();
-
-		try {
-			JAXBContext context = JAXBContext.newInstance(ProductList.class);
-			Marshaller marshaller = context.createMarshaller();
-			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-
-			JAXBContext jaxbContext = JAXBContext.newInstance(ProductList.class);
-		} catch (PropertyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		final String to = new StringBuilder(uri).append("/").append(incoming).append("?").append(username).append("&")
+				.append(password).toString();
 
 		try {
 			camelContext.addRoutes(new RouteBuilder() {
 				@Override
 				public void configure() throws Exception {
+					 from(from).to("xslt:xslt/ProductsToLisasProducts.xsl").to(to);
 				}
 			});
 			camelContext.start();
